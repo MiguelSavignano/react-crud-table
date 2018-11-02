@@ -6,14 +6,7 @@ import './App.css';
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 
 function onAfterSaveCell(row, cellName, cellValue) {
-  alert(`Save cell ${cellName} with value ${cellValue}`);
-
-  let rowStr = '';
-  for (const prop in row) {
-    rowStr += prop + ': ' + row[prop] + '\n';
-  }
-
-  alert('Thw whole row :\n' + rowStr);
+  console.log(row)
 }
 
 function onBeforeSaveCell(row, cellName, cellValue) {

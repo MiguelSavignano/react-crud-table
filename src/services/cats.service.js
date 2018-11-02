@@ -13,8 +13,9 @@ export class CatsService {
   create(){
 
   }
-  update(){
-
+  async update({id, ...attributes}){
+    const { data } = await axios.put(`${this.url}/${this.endpoint}/${id}`, attributes)
+    return data
   }
   destroy(){
 
