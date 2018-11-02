@@ -10,15 +10,20 @@ export class CatsService {
     const { data } = await axios.get(`${this.url}/${this.endpoint}`)
     return data
   }
-  create(){
 
+  async create({id, ...attributes}){
+    const { data } = await axios.post(`${this.url}/${this.endpoint}`, attributes)
+    return data
   }
+
   async update({id, ...attributes}){
     const { data } = await axios.put(`${this.url}/${this.endpoint}/${id}`, attributes)
     return data
   }
-  destroy(){
 
+  async destroy(id){
+    const { data } = await axios.delete(`${this.url}/${this.endpoint}/${id}`)
+    return data
   }
 }
 

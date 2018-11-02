@@ -6,7 +6,7 @@ import './App.css';
 import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 
 function onAfterSaveCell(row, cellName, cellValue) {
-  console.log(row)
+  service.update(row)
 }
 
 function onBeforeSaveCell(row, cellName, cellValue) {
@@ -15,11 +15,35 @@ function onBeforeSaveCell(row, cellName, cellValue) {
   return true;
 }
 
+function onAfterInsertRow(row) {
+  service.create(row)
+}
+
+function onAfterDeleteRow(rowKeys) {
+  const [key] = rowKeys
+  service.destroy(key)
+}
+
+// const onAutovalue = (value) => {
+//   return 99
+// }
+
+
 const cellEditProp = {
   mode: 'click',
   blurToSave: true,
   beforeSaveCell: onBeforeSaveCell, // a hook for before saving cell
   afterSaveCell: onAfterSaveCell  // a hook for after saving cell
+};
+
+const selectRow = {
+  mode: 'radio'
+};
+
+const options = {
+  saveText: 'Custom Save Text',
+  afterInsertRow: onAfterInsertRow,   // A hook for after insert rows
+  afterDeleteRow: onAfterDeleteRow,  // A hook for after droping rows.
 };
 
 class BlurToSaveTable extends React.Component {
@@ -31,10 +55,10 @@ class BlurToSaveTable extends React.Component {
   render() {
     const { resources } = this.state
     return (
-      <BootstrapTable data={ resources } cellEdit={ cellEditProp }>
-          <TableHeaderColumn dataField='id' isKey={ true }>Product ID</TableHeaderColumn>
-          <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
-          <TableHeaderColumn dataField='age'>Product Price</TableHeaderColumn>
+      <BootstrapTable data={ resources } search insertRow={ true } deleteRow={ true } selectRow={ selectRow } cellEdit={ cellEditProp } options={ options }>
+          <TableHeaderColumn width='10%' dataField='id' isKey={ true } autoValue>ID</TableHeaderColumn>
+          <TableHeaderColumn dataField='name'>Name</TableHeaderColumn>
+          <TableHeaderColumn dataField='age' dataSort>Age</TableHeaderColumn>
       </BootstrapTable>
     );
   }
